@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package proto;
+
+option go_package = "/proto;proto";
+
+service PubSub {
+    //Подписка (стрим событий)
+    rpc Subscribe(SubscribeRequest) returns (stream Event);
+
+    //Публикация (запрос-ответ)
+    rpc Publish(PublishRequest) returns (google.protobuf.Empty);
+}
+
+message SubscribeRequest {
+    string key = 1;
+}
+
+message PublishRequest {
+    string key = 1;
+    string data = 2;
+}
+
+message Event {
+    string data = 1;
+}
